@@ -1,0 +1,863 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Week 4 Programming Assignment}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{programming-assignment}{%
+\section{Programming Assignment}\label{programming-assignment}}
+
+\hypertarget{saving-and-loading-models-with-application-to-the-eurosat-dataset}{%
+\subsection{Saving and loading models, with application to the EuroSat
+dataset}\label{saving-and-loading-models-with-application-to-the-eurosat-dataset}}
+
+\hypertarget{instructions}{%
+\subsubsection{Instructions}\label{instructions}}
+
+In this notebook, you will create a neural network that classifies land
+uses and land covers from satellite imagery. You will save your model
+using Tensorflow's callbacks and reload it later. You will also load in
+a pre-trained neural network classifier and compare performance with it.
+
+Some code cells are provided for you in the notebook. You should avoid
+editing provided code, and make sure to execute the cells in order to
+avoid unexpected errors. Some cells begin with the line:
+
+\texttt{\#\#\#\#\ GRADED\ CELL\ \#\#\#\#}
+
+Don't move or edit this first line - this is what the automatic grader
+looks for to recognise graded cells. These cells require you to write
+your own code to complete them, and are automatically graded when you
+submit the notebook. Don't edit the function name or signature provided
+in these cells, otherwise the automatic grader might not function
+properly. Inside these graded cells, you can use any functions or
+classes that are imported below, but make sure you don't use any
+variables that are outside the scope of the function.
+
+\hypertarget{how-to-submit}{%
+\subsubsection{How to submit}\label{how-to-submit}}
+
+Complete all the tasks you are asked for in the worksheet. When you have
+finished and are happy with your code, press the \textbf{Submit
+Assignment} button at the top of this notebook.
+
+\hypertarget{lets-get-started}{%
+\subsubsection{Let's get started!}\label{lets-get-started}}
+
+We'll start running some imports, and loading the dataset. Do not edit
+the existing imports in the following cell. If you would like to make
+further Tensorflow imports, you should add them here.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} PACKAGE IMPORTS \PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+        
+        \PY{c+c1}{\PYZsh{} Run this cell first to import all required packages. Do not make any imports elsewhere in the notebook}
+        
+        \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{preprocessing}\PY{n+nn}{.}\PY{n+nn}{image} \PY{k}{import} \PY{n}{load\PYZus{}img}\PY{p}{,} \PY{n}{img\PYZus{}to\PYZus{}array}
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{models} \PY{k}{import} \PY{n}{Sequential}\PY{p}{,} \PY{n}{load\PYZus{}model}
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{Dense}\PY{p}{,} \PY{n}{Flatten}\PY{p}{,} \PY{n}{Conv2D}\PY{p}{,} \PY{n}{MaxPooling2D}
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{callbacks} \PY{k}{import} \PY{n}{ModelCheckpoint}\PY{p}{,} \PY{n}{EarlyStopping}
+        \PY{k+kn}{import} \PY{n+nn}{os}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        
+        \PY{c+c1}{\PYZsh{} If you would like to make further imports from tensorflow, add them here}
+\end{Verbatim}
+
+    \begin{figure}
+\centering
+\includegraphics{data/eurosat_overview.jpg}
+\caption{EuroSAT overview image}
+\end{figure}
+
+\hypertarget{the-eurosat-dataset}{%
+\paragraph{The EuroSAT dataset}\label{the-eurosat-dataset}}
+
+In this assignment, you will use the
+\href{https://github.com/phelber/EuroSAT}{EuroSAT dataset}. It consists
+of 27000 labelled Sentinel-2 satellite images of different land uses:
+residential, industrial, highway, river, forest, pasture, herbaceous
+vegetation, annual crop, permanent crop and sea/lake. For a reference,
+see the following papers: - Eurosat: A novel dataset and deep learning
+benchmark for land use and land cover classification. Patrick Helber,
+Benjamin Bischke, Andreas Dengel, Damian Borth. IEEE Journal of Selected
+Topics in Applied Earth Observations and Remote Sensing, 2019. -
+Introducing EuroSAT: A Novel Dataset and Deep Learning Benchmark for
+Land Use and Land Cover Classification. Patrick Helber, Benjamin
+Bischke, Andreas Dengel. 2018 IEEE International Geoscience and Remote
+Sensing Symposium, 2018.
+
+Your goal is to construct a neural network that classifies a satellite
+image into one of these 10 classes, as well as applying some of the
+saving and loading techniques you have learned in the previous sessions.
+
+    \hypertarget{import-the-data}{%
+\paragraph{Import the data}\label{import-the-data}}
+
+The dataset you will train your model on is a subset of the total data,
+with 4000 training images and 1000 testing images, with roughly equal
+numbers of each class. The code to import the data is provided below.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Run this cell to import the Eurosat data}
+        
+        \PY{k}{def} \PY{n+nf}{load\PYZus{}eurosat\PYZus{}data}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{data\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/}\PY{l+s+s1}{\PYZsq{}}
+            \PY{n}{x\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{data\PYZus{}dir}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x\PYZus{}train.npy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+            \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{data\PYZus{}dir}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y\PYZus{}train.npy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+            \PY{n}{x\PYZus{}test}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{data\PYZus{}dir}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x\PYZus{}test.npy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+            \PY{n}{y\PYZus{}test}  \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{data\PYZus{}dir}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y\PYZus{}test.npy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+        
+        \PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)} \PY{o}{=} \PY{n}{load\PYZus{}eurosat\PYZus{}data}\PY{p}{(}\PY{p}{)}
+        \PY{n}{x\PYZus{}train} \PY{o}{=} \PY{n}{x\PYZus{}train} \PY{o}{/} \PY{l+m+mf}{255.0}
+        \PY{n}{x\PYZus{}test} \PY{o}{=} \PY{n}{x\PYZus{}test} \PY{o}{/} \PY{l+m+mf}{255.0}
+\end{Verbatim}
+
+    \hypertarget{build-the-neural-network-model}{%
+\paragraph{Build the neural network
+model}\label{build-the-neural-network-model}}
+
+    You can now construct a model to fit to the data. Using the Sequential
+API, build your model according to the following specifications:
+
+\begin{itemize}
+\tightlist
+\item
+  The model should use the input\_shape in the function argument to set
+  the input size in the first layer.
+\item
+  The first layer should be a Conv2D layer with 16 filters, a 3x3 kernel
+  size, a ReLU activation function and `SAME' padding. Name this layer
+  `conv\_1'.
+\item
+  The second layer should also be a Conv2D layer with 8 filters, a 3x3
+  kernel size, a ReLU activation function and `SAME' padding. Name this
+  layer `conv\_2'.
+\item
+  The third layer should be a MaxPooling2D layer with a pooling window
+  size of 8x8. Name this layer `pool\_1'.
+\item
+  The fourth layer should be a Flatten layer, named `flatten'.
+\item
+  The fifth layer should be a Dense layer with 32 units, a ReLU
+  activation. Name this layer `dense\_1'.
+\item
+  The sixth and final layer should be a Dense layer with 10 units and
+  softmax activation. Name this layer `dense\_2'.
+\end{itemize}
+
+In total, the network should have 6 layers.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} GRADED CELL \PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         
+         \PY{c+c1}{\PYZsh{} Complete the following function. }
+         \PY{c+c1}{\PYZsh{} Make sure to not change the function name or arguments.}
+         
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}new\PYZus{}model}\PY{p}{(}\PY{n}{input\PYZus{}shape}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    This function should build a Sequential model according to the above specification. Ensure the }
+         \PY{l+s+sd}{    weights are initialised by providing the input\PYZus{}shape argument in the first layer, given by the}
+         \PY{l+s+sd}{    function argument.}
+         \PY{l+s+sd}{    Your function should also compile the model with the Adam optimiser, sparse categorical cross}
+         \PY{l+s+sd}{    entropy loss function, and a single accuracy metric.}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{model}\PY{o}{=}\PY{n}{Sequential}\PY{p}{(}\PY{p}{[}
+                 \PY{n}{Conv2D}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SAME}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{conv\PYZus{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{input\PYZus{}shape}\PY{o}{=}\PY{n}{input\PYZus{}shape}\PY{p}{)}\PY{p}{,}
+                 \PY{n}{Conv2D}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SAME}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{conv\PYZus{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                 \PY{n}{MaxPooling2D}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pool\PYZus{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                 \PY{n}{Flatten}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{flatten}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                 \PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{32}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dense\PYZus{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                 \PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{softmax}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dense\PYZus{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{p}{]}\PY{p}{)}
+             \PY{k}{return} \PY{n}{model}
+         
+             
+\end{Verbatim}
+
+    \hypertarget{compile-and-evaluate-the-model}{%
+\paragraph{Compile and evaluate the
+model}\label{compile-and-evaluate-the-model}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} Run your function to create the model}
+         
+         \PY{n}{model} \PY{o}{=} \PY{n}{get\PYZus{}new\PYZus{}model}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{} Run this cell to define a function to evaluate a model\PYZsq{}s test accuracy}
+         
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}test\PYZus{}accuracy}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Test model classification accuracy\PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{test\PYZus{}loss}\PY{p}{,} \PY{n}{test\PYZus{}acc} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy: }\PY{l+s+si}{\PYZob{}acc:0.3f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{acc}\PY{o}{=}\PY{n}{test\PYZus{}acc}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{} Print the model summary and calculate its initialised test accuracy}
+         
+         \PY{n}{model}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Model: "sequential\_4"
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Layer (type)                 Output Shape              Param \#   
+=================================================================
+conv\_1 (Conv2D)              (None, 64, 64, 16)        448       
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv\_2 (Conv2D)              (None, 64, 64, 8)         1160      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+pool\_1 (MaxPooling2D)        (None, 8, 8, 8)           0         
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+flatten (Flatten)            (None, 512)               0         
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_1 (Dense)              (None, 32)                16416     
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_2 (Dense)              (None, 10)                330       
+=================================================================
+Total params: 18,354
+Trainable params: 18,354
+Non-trainable params: 0
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+    \end{Verbatim}
+
+    \hypertarget{create-checkpoints-to-save-model-during-training-with-a-criterion}{%
+\paragraph{Create checkpoints to save model during training, with a
+criterion}\label{create-checkpoints-to-save-model-during-training-with-a-criterion}}
+
+You will now create three callbacks: -
+\texttt{checkpoint\_every\_epoch}: checkpoint that saves the model
+weights every epoch during training - \texttt{checkpoint\_best\_only}:
+checkpoint that saves only the weights with the highest validation
+accuracy. Use the testing data as the validation data. -
+\texttt{early\_stopping}: early stopping object that ends training if
+the validation accuracy has not improved in 3 epochs.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} GRADED CELL \PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         
+         \PY{c+c1}{\PYZsh{} Complete the following functions. }
+         \PY{c+c1}{\PYZsh{} Make sure to not change the function names or arguments.}
+         
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}checkpoint\PYZus{}every\PYZus{}epoch}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    This function should return a ModelCheckpoint object that:}
+         \PY{l+s+sd}{    \PYZhy{} saves the weights only at the end of every epoch}
+         \PY{l+s+sd}{    \PYZhy{} saves into a directory called \PYZsq{}checkpoints\PYZus{}every\PYZus{}epoch\PYZsq{} inside the current working directory}
+         \PY{l+s+sd}{    \PYZhy{} generates filenames in that directory like \PYZsq{}checkpoint\PYZus{}XXX\PYZsq{} where}
+         \PY{l+s+sd}{      XXX is the epoch number formatted to have three digits, e.g. 001, 002, 003, etc.}
+         \PY{l+s+sd}{      }
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{checkpoint\PYZus{}path}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{checkpoints\PYZus{}every\PYZus{}epoch/checkpoint\PYZus{}}\PY{l+s+si}{\PYZob{}epoch:03d\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+             \PY{k}{return} \PY{n}{ModelCheckpoint}\PY{p}{(}\PY{n}{filepath}\PY{o}{=}\PY{n}{checkpoint\PYZus{}path}\PY{p}{,}\PY{n}{save\PYZus{}weights\PYZus{}only}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+             
+         
+         
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}checkpoint\PYZus{}best\PYZus{}only}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    This function should return a ModelCheckpoint object that:}
+         \PY{l+s+sd}{    \PYZhy{} saves only the weights that generate the highest validation (testing) accuracy}
+         \PY{l+s+sd}{    \PYZhy{} saves into a directory called \PYZsq{}checkpoints\PYZus{}best\PYZus{}only\PYZsq{} inside the current working directory}
+         \PY{l+s+sd}{    \PYZhy{} generates a file called \PYZsq{}checkpoints\PYZus{}best\PYZus{}only/checkpoint\PYZsq{} }
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{checkpoint\PYZus{}path}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{checkpoints\PYZus{}best\PYZus{}only/checkpoints\PYZus{}best\PYZus{}only/checkpoint}\PY{l+s+s1}{\PYZsq{}}
+             \PY{k}{return} \PY{n}{ModelCheckpoint}\PY{p}{(}\PY{n}{checkpoint\PYZus{}path}\PY{p}{,}\PY{n}{save\PYZus{}weights\PYZus{}only}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{mointor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val\PYZus{}accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{mode}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{save\PYZus{}best\PYZus{}only}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         
+             
+             
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} GRADED CELL \PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         
+         \PY{c+c1}{\PYZsh{} Complete the following function. }
+         \PY{c+c1}{\PYZsh{} Make sure to not change the function name or arguments.}
+         
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}early\PYZus{}stopping}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    This function should return an EarlyStopping callback that stops training when}
+         \PY{l+s+sd}{    the validation (testing) accuracy has not improved in the last 3 epochs.}
+         \PY{l+s+sd}{    HINT: use the EarlyStopping callback with the correct \PYZsq{}monitor\PYZsq{} and \PYZsq{}patience\PYZsq{}}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{k}{return} \PY{n}{EarlyStopping}\PY{p}{(}\PY{n}{monitor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val\PYZus{}accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{patience}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+             
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{c+c1}{\PYZsh{} Run this cell to create the callbacks}
+         
+         \PY{n}{checkpoint\PYZus{}every\PYZus{}epoch} \PY{o}{=} \PY{n}{get\PYZus{}checkpoint\PYZus{}every\PYZus{}epoch}\PY{p}{(}\PY{p}{)}
+         \PY{n}{checkpoint\PYZus{}best\PYZus{}only} \PY{o}{=} \PY{n}{get\PYZus{}checkpoint\PYZus{}best\PYZus{}only}\PY{p}{(}\PY{p}{)}
+         \PY{n}{early\PYZus{}stopping} \PY{o}{=} \PY{n}{get\PYZus{}early\PYZus{}stopping}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{n}{checkpoint\PYZus{}best\PYZus{}only}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}53}]:} <tensorflow.python.keras.callbacks.ModelCheckpoint at 0x7f28886a4cf8>
+\end{Verbatim}
+            
+    \hypertarget{train-model-using-the-callbacks}{%
+\paragraph{Train model using the
+callbacks}\label{train-model-using-the-callbacks}}
+
+Now, you will train the model using the three callbacks you created. If
+you created the callbacks correctly, three things should happen: - At
+the end of every epoch, the model weights are saved into a directory
+called \texttt{checkpoints\_every\_epoch} - At the end of every epoch,
+the model weights are saved into a directory called
+\texttt{checkpoints\_best\_only} \textbf{only} if those weights lead to
+the highest test accuracy - Training stops when the testing accuracy has
+not improved in three epochs.
+
+You should then have two directories: - A directory called
+\texttt{checkpoints\_every\_epoch} containing filenames that include
+\texttt{checkpoint\_001}, \texttt{checkpoint\_002}, etc with the
+\texttt{001}, \texttt{002} corresponding to the epoch - A directory
+called \texttt{checkpoints\_best\_only} containing filenames that
+include \texttt{checkpoint}, which contain only the weights leading to
+the highest testing accuracy
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{c+c1}{\PYZsh{} Train model using the callbacks you just created}
+         \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sparse\PYZus{}categorical\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{callbacks} \PY{o}{=} \PY{p}{[}\PY{n}{checkpoint\PYZus{}every\PYZus{}epoch}\PY{p}{,} \PY{n}{checkpoint\PYZus{}best\PYZus{}only}\PY{p}{,} \PY{n}{early\PYZus{}stopping}\PY{p}{]}
+         \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{epochs}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{validation\PYZus{}data}\PY{o}{=}\PY{p}{(}\PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{,} \PY{n}{callbacks}\PY{o}{=}\PY{n}{callbacks}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Train on 4000 samples, validate on 1000 samples
+Epoch 1/3
+3968/4000 [============================>.] - ETA: 0s - loss: 0.5835 - accuracy: 0.7873
+Epoch 00001: saving model to checkpoints\_every\_epoch/checkpoint\_001
+
+Epoch 00001: val\_loss improved from -inf to 0.76425, saving model to checkpoints\_best\_only/checkpoints\_best\_only/checkpoint
+4000/4000 [==============================] - 84s 21ms/sample - loss: 0.5826 - accuracy: 0.7875 - val\_loss: 0.7642 - val\_accuracy: 0.7220
+Epoch 2/3
+3968/4000 [============================>.] - ETA: 0s - loss: 0.5984 - accuracy: 0.7883
+Epoch 00002: saving model to checkpoints\_every\_epoch/checkpoint\_002
+
+Epoch 00002: val\_loss did not improve from 0.76425
+4000/4000 [==============================] - 79s 20ms/sample - loss: 0.6007 - accuracy: 0.7878 - val\_loss: 0.7417 - val\_accuracy: 0.7390
+Epoch 3/3
+3968/4000 [============================>.] - ETA: 0s - loss: 0.5645 - accuracy: 0.8009
+Epoch 00003: saving model to checkpoints\_every\_epoch/checkpoint\_003
+
+Epoch 00003: val\_loss did not improve from 0.76425
+4000/4000 [==============================] - 81s 20ms/sample - loss: 0.5650 - accuracy: 0.8000 - val\_loss: 0.7543 - val\_accuracy: 0.7440
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}54}]:} <tensorflow.python.keras.callbacks.History at 0x7f28885d86a0>
+\end{Verbatim}
+            
+    \hypertarget{create-new-instance-of-model-and-load-on-both-sets-of-weights}{%
+\paragraph{Create new instance of model and load on both sets of
+weights}\label{create-new-instance-of-model-and-load-on-both-sets-of-weights}}
+
+Now you will use the weights you just saved in a fresh model. You should
+create two functions, both of which take a freshly instantiated model
+instance: - \texttt{model\_last\_epoch} should contain the weights from
+the latest saved epoch - \texttt{model\_best\_epoch} should contain the
+weights from the saved epoch with the highest testing accuracy
+
+\emph{Hint: use the} \texttt{tf.train.latest\_checkpoint} \emph{function
+to get the filename of the latest saved checkpoint file. Check the docs}
+\href{https://www.tensorflow.org/api_docs/python/tf/train/latest_checkpoint}{\emph{here}}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} GRADED CELL \PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         
+         \PY{c+c1}{\PYZsh{} Complete the following functions. }
+         \PY{c+c1}{\PYZsh{} Make sure to not change the function name or arguments.}
+         
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}model\PYZus{}last\PYZus{}epoch}\PY{p}{(}\PY{n}{model}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    This function should create a new instance of the CNN you created earlier,}
+         \PY{l+s+sd}{    load on the weights from the last training epoch, and return this model.}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{checkpoint\PYZus{}path}\PY{o}{=}\PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{latest\PYZus{}checkpoint}\PY{p}{(}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{checkpoints\PYZus{}every\PYZus{}epoch}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{latest\PYZus{}filename}\PY{o}{=}\PY{k+kc}{None}
+         \PY{p}{)}
+             \PY{k}{return} \PY{n}{model}\PY{o}{.}\PY{n}{load\PYZus{}weights}\PY{p}{(}\PY{n}{checkpoint\PYZus{}path}\PY{p}{)}
+             
+             
+             
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}model\PYZus{}best\PYZus{}epoch}\PY{p}{(}\PY{n}{model}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    This function should create a new instance of the CNN you created earlier, load }
+         \PY{l+s+sd}{    on the weights leading to the highest validation accuracy, and return this model.}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{checkpoint\PYZus{}path}\PY{o}{=}\PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{latest\PYZus{}checkpoint}\PY{p}{(}
+             \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{checkpoints\PYZus{}best\PYZus{}only}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{latest\PYZus{}filename}\PY{o}{=}\PY{k+kc}{None}
+         \PY{p}{)}
+             \PY{k}{return}  \PY{n}{model}\PY{o}{.}\PY{n}{load\PYZus{}weights}\PY{p}{(}\PY{n}{checkpoint\PYZus{}path}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} \PY{c+c1}{\PYZsh{} Run this cell to create two models: one with the weights from the last training}
+         \PY{c+c1}{\PYZsh{} epoch, and one with the weights leading to the highest validation (testing) accuracy.}
+         \PY{c+c1}{\PYZsh{} Verify that the second has a higher validation (testing) accuarcy.}
+         
+         \PY{n}{model\PYZus{}last\PYZus{}epoch} \PY{o}{=} \PY{n}{get\PYZus{}model\PYZus{}last\PYZus{}epoch}\PY{p}{(}\PY{n}{get\PYZus{}new\PYZus{}model}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model\PYZus{}best\PYZus{}epoch} \PY{o}{=} \PY{n}{get\PYZus{}model\PYZus{}best\PYZus{}epoch}\PY{p}{(}\PY{n}{get\PYZus{}new\PYZus{}model}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model with last epoch weights:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{get\PYZus{}test\PYZus{}accuracy}\PY{p}{(}\PY{n}{model\PYZus{}last\PYZus{}epoch}\PY{p}{,} \PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model with best epoch weights:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{get\PYZus{}test\PYZus{}accuracy}\PY{p}{(}\PY{n}{model\PYZus{}best\PYZus{}epoch}\PY{p}{,} \PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer.iter
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer.beta\_1
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer.beta\_2
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer.decay
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer.learning\_rate
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'm' for (root).layer\_with\_weights-0.kernel
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'm' for (root).layer\_with\_weights-0.bias
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'm' for (root).layer\_with\_weights-1.kernel
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'm' for (root).layer\_with\_weights-1.bias
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'm' for (root).layer\_with\_weights-2.kernel
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'm' for (root).layer\_with\_weights-2.bias
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'm' for (root).layer\_with\_weights-3.kernel
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'm' for (root).layer\_with\_weights-3.bias
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'v' for (root).layer\_with\_weights-0.kernel
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'v' for (root).layer\_with\_weights-0.bias
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'v' for (root).layer\_with\_weights-1.kernel
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'v' for (root).layer\_with\_weights-1.bias
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'v' for (root).layer\_with\_weights-2.kernel
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'v' for (root).layer\_with\_weights-2.bias
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'v' for (root).layer\_with\_weights-3.kernel
+WARNING:tensorflow:Unresolved object in checkpoint: (root).optimizer's state 'v' for (root).layer\_with\_weights-3.bias
+WARNING:tensorflow:A checkpoint was restored (e.g. tf.train.Checkpoint.restore or tf.keras.Model.load\_weights) but not all checkpointed values were used. See above for specific issues. Use expect\_partial() on the load status object, e.g. tf.train.Checkpoint.restore({\ldots}).expect\_partial(), to silence these warnings, or use assert\_consumed() to make the check explicit. See https://www.tensorflow.org/alpha/guide/checkpoints\#loading\_mechanics for details.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        AttributeError                            Traceback (most recent call last)
+
+        <ipython-input-57-b6d169507ca4> in <module>
+          4 
+          5 model\_last\_epoch = get\_model\_last\_epoch(get\_new\_model(x\_train[0].shape))
+    ----> 6 model\_best\_epoch = get\_model\_best\_epoch(get\_new\_model(x\_train[0].shape))
+          7 print('Model with last epoch weights:')
+          8 get\_test\_accuracy(model\_last\_epoch, x\_test, y\_test)
+
+
+        <ipython-input-55-cdfea231d842> in get\_model\_best\_epoch(model)
+         24     'checkpoints\_best\_only', latest\_filename=None
+         25 )
+    ---> 26     return  model.load\_weights(checkpoint\_path)
+    
+
+        /opt/conda/lib/python3.7/site-packages/tensorflow\_core/python/keras/engine/training.py in load\_weights(self, filepath, by\_name)
+        179         raise ValueError('Load weights is not yet supported with TPUStrategy '
+        180                          'with steps\_per\_run greater than 1.')
+    --> 181     return super(Model, self).load\_weights(filepath, by\_name)
+        182 
+        183   @trackable.no\_automatic\_dependency\_tracking
+
+
+        /opt/conda/lib/python3.7/site-packages/tensorflow\_core/python/keras/engine/network.py in load\_weights(self, filepath, by\_name)
+       1137             format.
+       1138     """
+    -> 1139     if \_is\_hdf5\_filepath(filepath):
+       1140       save\_format = 'h5'
+       1141     else:
+
+
+        /opt/conda/lib/python3.7/site-packages/tensorflow\_core/python/keras/engine/network.py in \_is\_hdf5\_filepath(filepath)
+       1447 
+       1448 def \_is\_hdf5\_filepath(filepath):
+    -> 1449   return (filepath.endswith('.h5') or filepath.endswith('.keras') or
+       1450           filepath.endswith('.hdf5'))
+       1451 
+
+
+        AttributeError: 'NoneType' object has no attribute 'endswith'
+
+    \end{Verbatim}
+
+    \hypertarget{load-from-scratch-a-model-trained-on-the-eurosat-dataset.}{%
+\paragraph{Load, from scratch, a model trained on the EuroSat
+dataset.}\label{load-from-scratch-a-model-trained-on-the-eurosat-dataset.}}
+
+In your workspace, you will find another model trained on the
+\texttt{EuroSAT} dataset in \texttt{.h5} format. This model is trained
+on a larger subset of the EuroSAT dataset and has a more complex
+architecture. The path to the model is \texttt{models/EuroSatNet.h5}.
+See how its testing accuracy compares to your model!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}58}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{} GRADED CELL \PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+         
+         \PY{c+c1}{\PYZsh{} Complete the following functions. }
+         \PY{c+c1}{\PYZsh{} Make sure to not change the function name or arguments.}
+         \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{models} \PY{k}{import} \PY{n}{load\PYZus{}model}
+         \PY{k}{def} \PY{n+nf}{get\PYZus{}model\PYZus{}eurosatnet}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{    This function should return the pretrained EuroSatNet.h5 model.}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{k}{return} \PY{n}{load\PYZus{}model}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{models/EuroSatNet.h5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}59}]:} \PY{c+c1}{\PYZsh{} Run this cell to print a summary of the EuroSatNet model, along with its validation accuracy.}
+         
+         \PY{n}{model\PYZus{}eurosatnet} \PY{o}{=} \PY{n}{get\PYZus{}model\PYZus{}eurosatnet}\PY{p}{(}\PY{p}{)}
+         \PY{n}{model\PYZus{}eurosatnet}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+         \PY{n}{get\PYZus{}test\PYZus{}accuracy}\PY{p}{(}\PY{n}{model\PYZus{}eurosatnet}\PY{p}{,} \PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Model: "sequential\_21"
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Layer (type)                 Output Shape              Param \#   
+=================================================================
+conv\_1 (Conv2D)              (None, 64, 64, 16)        448       
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv\_2 (Conv2D)              (None, 64, 64, 16)        6416      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+pool\_1 (MaxPooling2D)        (None, 32, 32, 16)        0         
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv\_3 (Conv2D)              (None, 32, 32, 16)        2320      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv\_4 (Conv2D)              (None, 32, 32, 16)        6416      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+pool\_2 (MaxPooling2D)        (None, 16, 16, 16)        0         
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv\_5 (Conv2D)              (None, 16, 16, 16)        2320      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv\_6 (Conv2D)              (None, 16, 16, 16)        6416      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+pool\_3 (MaxPooling2D)        (None, 8, 8, 16)          0         
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv\_7 (Conv2D)              (None, 8, 8, 16)          2320      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv\_8 (Conv2D)              (None, 8, 8, 16)          6416      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+pool\_4 (MaxPooling2D)        (None, 4, 4, 16)          0         
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+flatten (Flatten)            (None, 256)               0         
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_1 (Dense)              (None, 32)                8224      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_2 (Dense)              (None, 10)                330       
+=================================================================
+Total params: 41,626
+Trainable params: 41,626
+Non-trainable params: 0
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+accuracy: 0.810
+
+    \end{Verbatim}
+
+    Congratulations for completing this programming assignment! You're now
+ready to move on to the capstone project for this course.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
